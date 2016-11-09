@@ -1,4 +1,4 @@
-# CafeLounge.js
+# CafeLoungeJS
 
 **Lightweight, Open Source Javascript library: CafeLoungeJS**
 
