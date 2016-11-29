@@ -1,111 +1,128 @@
+/**
+ * Notes:
+ *
+ * NOTE:1
+ * - Can't use es6 default values, in order to support IE9+
+ */
+function cafeCompatibilityWorkArounds(){
+    if(!(window.console)) {
+      window.console = {
+        log: function(){},
+        debug: function(){},
+        info: function(){},
+        warn: function(){},
+        error: function(){}
+      };
+    }
+}
 
 var cafe = {
-        version: "0.1",
+        version: "0.2",
         author: "Austin Fish",
         html: '',
-        is: {
-            /**
-             * [what description]
-             * @param  {*} item        Item to check
-             * @return {string|array}  Single string or array of matching types.
-             *                         Matchable types include node, string,
-             *                         number, boolean, object, array,undefined,
-             *                         null.
-             */
-            what: function(item){
+        /**
+         * [what description]
+         * @param  {*} item        Item to check
+         * @return {string|array}  Single string or array of matching types.
+         *                         Matchable types include node, string,
+         *                         number, boolean, object, array,undefined,
+         *                         null.
+         */
+        isWhat: function(item){
 
-            },
-            /**
-             * Check if passed item is a node
-             *
-             * @param  {*} item                   Item to check against specified type
-             * @param  {number|string} [inDOM=2]  Three values: 0, 1, or 2.
-             *                                    0 = Check that item is node, but return
-             *                                        false if it is in the DOM.
-             *                                    1 = Check that item is node, but return
-             *                                        false if it is NOT in the DOM.
-             *                                    2 = Only check if the item is a node,
-             *                                        doesn't matter where it's stored.
-             * @param  {string} [tag=false]       Supply tag name to check for specific type.
-             *                                    For instance cafe.is.node(item, 'div'); will
-             *                                    return true only if item is a div.
-             * @return {boolean}                  Returns true if item is of specified type
-             */
-            node: function(item, inDOM = 2, tag = false){
-                if(item.nodeType){
-                    let found = cafe.html.contains(item);
-                    if(inDOM == 0 && found){
-                        return false;
-                    }
-                    if(inDOM == 1 && !found){
-                        return false;
-                    }
-                    if(tag){
-                        if(item.tagName.toLowerCase() === tag){
-                            return true;
-                        }
-                        return false
-                    }
-                    return true
+        },
+        /**
+         * Check if passed item is a node
+         *
+         * @param  {*} item                   Item to check against specified type
+         * @param  {number|string} [inDOM=2]  Three values: 0, 1, or 2.
+         *                                    0 = Check that item is node, but return
+         *                                        false if it is in the DOM.
+         *                                    1 = Check that item is node, but return
+         *                                        false if it is NOT in the DOM.
+         *                                    2 = Only check if the item is a node,
+         *                                        doesn't matter where it's stored.
+         * @param  {string} [tag=false]       Supply tag name to check for specific type.
+         *                                    For instance cafe.isNode(item, 'div'); will
+         *                                    return true only if item is a div.
+         * @return {boolean}                  Returns true if item is of specified type
+         */
+        isNode: function(item, inDOM, tag){
+            inDOM = inDOM === undefined ? 2 : inDOM; // NOTE:1
+            tag = tag === undefined ? false : tag; // NOTE:1
+            if(item.nodeType){
+                var found = cafe.html.contains(item);
+                if(inDOM == 0 && found){
+                    return false;
                 }
-                return false;
-            },
-            /**
-             * Check if passed item is a string
-             * @param  {*} item   Item to check against specified type
-             * @return {boolean}  Returns true if item is of specified type
-             */
-            string: function(item){
-
-            },
-            /**
-             * Check if passed item is a number
-             * @param  {*} item   Item to check against specified type
-             * @return {boolean}  Returns true if item is of specified type
-             */
-            number: function(item){
-
-            },
-            /**
-             * Check if passed item is a boolean
-             * @param  {*} item   Item to check against specified type
-             * @return {boolean}  Returns true if item is of specified type
-             */
-            boolean: function(item){
-
-            },
-            /**
-             * Check if passed item is an object
-             * @param  {*} item   Item to check against specified type
-             * @return {boolean}  Returns true if item is of specified type
-             */
-            object: function(item){
-
-            },
-            /**
-             * Check if passed item is an array
-             * @param  {*} item   Item to check against specified type
-             * @return {boolean}  Returns true if item is of specified type
-             */
-            array: function(item){
-
-            },
-            /**
-             * Check if passed item is undefined
-             * @param  {*} item   Item to check against specified type
-             * @return {boolean}  Returns true if item is of specified type
-             */
-            undefined: function(item){
-
-            },
-            /**
-             * Check if passed item is null
-             * @param  {*} item   Item to check against specified type
-             * @return {boolean}  Returns true if item is of specified type
-             */
-            null: function(item){
-
+                if(inDOM == 1 && !found){
+                    return false;
+                }
+                if(tag){
+                    if(item.tagName.toLowerCase() === tag){
+                        return true;
+                    }
+                    return false
+                }
+                return true
             }
+            return false;
+        },
+        /**
+         * Check if passed item is a string
+         * @param  {*} item   Item to check against specified type
+         * @return {boolean}  Returns true if item is of specified type
+         */
+        isStr: function(item){
+
+        },
+        /**
+         * Check if passed item is a number
+         * @param  {*} item   Item to check against specified type
+         * @return {boolean}  Returns true if item is of specified type
+         */
+        isNum: function(item){
+
+        },
+        /**
+         * Check if passed item is a boolean
+         * @param  {*} item   Item to check against specified type
+         * @return {boolean}  Returns true if item is of specified type
+         */
+        isBool: function(item){
+
+        },
+        /**
+         * Check if passed item is an object
+         * @param  {*} item   Item to check against specified type
+         * @return {boolean}  Returns true if item is of specified type
+         */
+        isObj: function(item){
+
+        },
+        /**
+         * Check if passed item is an array
+         * @param  {*} item   Item to check against specified type
+         * @return {boolean}  Returns true if item is of specified type
+         */
+        isArray: function(item){
+
+        },
+        /**
+         * Check if passed item is undefined
+         * @param  {*} item   Item to check against specified type
+         * @return {boolean}  Returns true if item is of specified type
+         */
+        isUndefined: function(item){
+
+        },
+        /**
+         * Check if passed item is null
+         * @param  {*} item   Item to check against specified type
+         * @return {boolean}  Returns true if item is of specified type
+         */
+        isNull: function(item){
+
         },
         /**
          * Takes two objects, one user-provided, and one of supported options with
@@ -120,7 +137,7 @@ var cafe = {
         optionSupport: function(provided, supports){
             options = {};
             if(provided){
-                for(option in supports){
+                for(var option in supports){
                     if(option in provided){
                         options[option] = provided[option];
                     } else {
@@ -157,7 +174,9 @@ var cafe = {
          *                                  'a' and 'b', in accordance with
          *                                  options set, True otherwise.
          */
-        compare: function(a, b, types = false, exists = false){
+        compare: function(a, b, types, exists){
+            types = types === undefined ? false : types; // NOTE:1
+            exists = exists === undefined ? false : exists; // NOTE:1
             if(a === b){
                 //save a lot of processing if they just so happen to be exactly the same
                 return true;
@@ -174,7 +193,7 @@ var cafe = {
             if(typeof a === typeof b){
                 if(typeof a === "object"){
                     if(exists){
-                        for(item in a){
+                        for(var item in a){
                             if(types){
                                 //Don't return false if item's not in b, because we're
                                 //checking items that exist
@@ -202,7 +221,7 @@ var cafe = {
                             //lengths and still the same
                             return false;
                         }
-                        for(item in a){
+                        for(var item in a){
                             if(!(item in b)){
                                 return false;
                             }
@@ -251,7 +270,7 @@ var cafe = {
          * @return {boolean}          Returns true if successful, false otherwise
          */
         nodeRemove: function(node){
-            if(node && this.is.node(node, 1)){
+            if(node && this.isNode(node, 1)){
                 node.parentNode.removeChild(node);
                 return true;
             }
@@ -268,9 +287,10 @@ var cafe = {
          * @return {HTMLElement|Boolean}    Node extracted from DOM, false if node
          *                                  not passed.
          */
-        nodeExtract: function(reference, deep = true){
-            let clone = false;
-            if(reference && this.is.node(reference)){
+        nodeExtract: function(reference, deep){
+            deep = deep === undefined ? true : deep; // NOTE:1
+            var clone = false;
+            if(reference && this.isNode(reference)){
                 clone = reference.cloneNode(deep);
             }
             if(clone != false){
@@ -293,19 +313,19 @@ var cafe = {
          *                                          in new parent element), false
          *                                          upon failure.
          */
-        nodeWrap: function(child, parentTag = 'div'){
-            let newNode = false;
+        nodeWrap: function(child, parentTag){
+            parentTag = parentTag === undefined ? 'div' : parentTag; // NOTE:1
+            var newNode = false;
             //If child is passed, and it's a node, and it's not in the DOM
-            if(child && this.is.node(child, 0)){
+            if(child && this.isNode(child, 0)){
                 newNode   = document.createElement(parentTag);
                 childNode = newNode.appendChild(child);
                 return newNode;
             //If child is passed, and it's a node, and it is in the DOM
-            } else if(child && this.is.node(child, 1)){
+        } else if(child && this.isNode(child, 1)){
                 newNode   = document.createElement(parentTag);
                 this.putAfter(child, newNode);
                 newNode.appendChild(this.nodeExtract(child));
-                console.log("testing");
             }
             return newNode;
         },
@@ -317,8 +337,8 @@ var cafe = {
          * @return {boolean}                  True if successful, false otherwise
          */
         putBefore: function(existingNode, toInsert){
-            if(existingNode && this.is.node(existingNode, 1)){
-                if(toInsert && this.is.node(toInsert)){
+            if(existingNode && this.isNode(existingNode, 1)){
+                if(toInsert && this.isNode(toInsert)){
                     existingNode.parentNode.insertBefore(toInsert, existingNode);
                     return true;
                 }
@@ -341,21 +361,24 @@ var cafe = {
             }
             return false;
         },
+        on: function(listenOn, listenTo, thenDo){
+            listenOn.addEventListener(listenTo, thenDo);
+        },
         init: function(){
 
             //Populate now that the document has loaded
             cafe.html = document.getElementsByTagName('html')[0];
 
             //Initialization message
-            console.log("\n" +
-                        "\n" +
-                        "%c  (( %c    ___    \n" +
-                        "%c   )) %c \\___/_  \n" +
-                        "%c  |~~| /~~~\\ \\  " +  "%c Café Lounge " + this.version + " - Part of the Café series \n" +
-                        "%c C|__| \\___/    " +  "%c by " + this.author + " - Initialized \n" +
-                        "       `'`'`    \n" +
-                        "\n" +
-                        "\n",
+            console.log("\n \
+                         \n \
+                         %c  (( %c    ___    \n \
+                         %c   )) %c \\___/_  \n \
+                         %c  |~~| /~~~\\ \\  %c Café Lounge " + this.version + " - Part of the Café series \n \
+                         %c C|__| \\___/    %c by " + this.author + " - Initialized \n \
+                                `'`'`    \n \
+                         \n \
+                         \n",
                         "color: #c0c0c0",
                         "color: #865A3E",
                         "color: #c0c0c0",
@@ -379,12 +402,14 @@ var cafe = {
          * @return {boolean}            Returns true once event listeners have been set
          */
         serve: function(callback){
-            window.onload = function(){
+            document.addEventListener('DOMContentLoaded', function(){
+                //Work around some issues in legacy browsers
+                cafeCompatibilityWorkArounds();
                 //Initialize some things after DOM has loaded
                 cafe.init();
                 //Run callback (all of user code)
                 callback();
-            }
+            });
             return true;
         }
 
